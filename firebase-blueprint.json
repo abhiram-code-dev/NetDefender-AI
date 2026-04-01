@@ -1,0 +1,110 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user information and preferences",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ScanResult": {
+      "title": "Scan Result",
+      "description": "Results from memory or file scans",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["memory", "file"] },
+        "status": { "type": "string", "enum": ["clean", "suspicious", "malicious"] },
+        "details": { "type": "object" },
+        "aiAnalysis": { "type": "string" },
+        "riskScore": { "type": "integer" }
+      },
+      "required": ["userId", "timestamp", "type", "status"]
+    },
+    "Alert": {
+      "title": "Security Alert",
+      "description": "Real-time security alerts",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "severity": { "type": "string", "enum": ["low", "medium", "high"] },
+        "message": { "type": "string" },
+        "source": { "type": "string" }
+      },
+      "required": ["userId", "timestamp", "severity", "message"]
+    },
+    "Settings": {
+      "title": "User Settings",
+      "description": "User preferences and configurations",
+      "type": "object",
+      "properties": {
+        "darkMode": { "type": "boolean" },
+        "notifications": { "type": "boolean" },
+        "autoScan": { "type": "boolean" },
+        "twoFactor": { "type": "boolean" },
+        "displayName": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "FirewallRule": {
+      "title": "Firewall Rule",
+      "description": "Blocked IP addresses on the firewall",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "target": { "type": "string" },
+        "type": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "action": { "type": "string" }
+      },
+      "required": ["userId", "target", "timestamp", "action"]
+    },
+    "WatchlistItem": {
+      "title": "Watchlist Item",
+      "description": "Items added to the threat watchlist",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "target": { "type": "string" },
+        "type": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "action": { "type": "string" }
+      },
+      "required": ["userId", "target", "timestamp", "action"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents"
+    },
+    "/scans/{scanId}": {
+      "schema": "ScanResult",
+      "description": "Historical scan results"
+    },
+    "/alerts/{alertId}": {
+      "schema": "Alert",
+      "description": "Real-time alerts"
+    },
+    "/settings/{userId}": {
+      "schema": "Settings",
+      "description": "User settings documents"
+    },
+    "/firewall_rules/{ruleId}": {
+      "schema": "FirewallRule",
+      "description": "Firewall block rules"
+    },
+    "/watchlist/{itemId}": {
+      "schema": "WatchlistItem",
+      "description": "Threat watchlist items"
+    }
+  }
+}

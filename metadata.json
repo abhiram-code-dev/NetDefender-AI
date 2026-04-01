@@ -1,0 +1,5 @@
+{
+  "name": "NetDefender AI",
+  "description": "Autonomous Cyber Threat Detection & Response Platform powered by AI and Forensics.",
+  "requestFramePermissions": ["microphone"]
+}
